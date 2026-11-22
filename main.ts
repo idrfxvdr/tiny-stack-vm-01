@@ -41,7 +41,7 @@ function run(p: Uint8Array, inp: Uint8Array) {
     if (sp - po + pu > 256) return bad(3);
     pc = nx;
     switch (op) {
-      case 0x00: return { out: out.subarray(0, olen), exit: 0 };
+      case 0x00: return bad(0);
       case 0x01: D[sp++] = (p[nx - 1] << 24) >> 24; break;
       case 0x02: D[sp++] = p[nx - 4] | (p[nx - 3] << 8) | (p[nx - 2] << 16) | (p[nx - 1] << 24); break;
       case 0x03: sp--; break;
@@ -115,7 +115,7 @@ function run(p: Uint8Array, inp: Uint8Array) {
         out[olen++] = D[--sp] & 255;
         break;
       case 0x52: D[sp++] = ip < inp.length ? inp[ip++] : -1; break;
-      default: return { out: out.subarray(0, olen), exit: D[--sp] & 255 };
+      default: return bad(D[--sp] & 255);
     }
   }
 }
