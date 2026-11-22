@@ -1,9 +1,5 @@
-// tiny-stack-vm: an interpreter for make.fun's tiny stack ISA (version 1).
-// Reads /input/<id>/program.bin + input.bin, writes /output/<id>/stdout.bin + exit.txt.
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-
-// Packed opcode table: 0 = not an opcode, else imm | pops<<3 | pushes<<5.
 const T = new Int16Array(256).fill(-1);
 function d(im: number, po: number, pu: number, list: number[]) {
   for (const b of list) T[b] = im | (po << 3) | (pu << 5);
